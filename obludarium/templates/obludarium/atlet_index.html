@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+        {% for atlet in atleti %}
+         <a href={% url "atlet_detail" atlet.id %}> Atlet: {{atlet.jmeno}} </a> <br>
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>

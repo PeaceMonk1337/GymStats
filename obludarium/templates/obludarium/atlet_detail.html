@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <h1> {{ atlet.jmeno }} {{ atlet.prijmeni }} <span class="glyphicon glyphicon-erase"></span></h1>
+    <h2> Výška: {{ atlet.vyska }}cm, Váha: {{ atlet.vaha }}kg, Procenta tuku: {{atlet.procenta_tuku}}% </h2>
+
+    <h3>  Výkony: </h3>
+    {% if atlet.vykon_set.all %}
+        <table>
+            <tr>
+                <th>Push-ups</th>
+                <th>CMJ</th>
+                <th>Row 500m</th>
+                <th>Squat</th>
+            </tr>
+            {% for vykon in atlet.vykon_set.all %}
+                <tr>
+                    <td>{{ vykon.push_ups }}x</td>
+                    <td>{{ vykon.cmj }}cm</td>
+                    <td>{{ vykon.row_500 }} m:ss</td>
+                    <td>{{ vykon.squat }}kg</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Tento atlet nemá žádné výkony.</p>
+    {% endif %}  </h3>
+    <hr>
+    Nové Tagy: {% if atlet.tagy.all.0 %} {% for tag in atlet.tagy.all %} <div class="btn btn-primary">{{tag.tag_title}} </div> {% endfor %} {% else %} <span style="color: red;">Tento atlet nemá žádné tagy</span> {% endif %}
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+
+        {% if user.is_admin %}<button name="edit">Upravit Atleta</button><button name="delete">Smazat Atleta</button>{% endif %}
+    </form>
+{% endblock %}
+
+</body>
+</html>

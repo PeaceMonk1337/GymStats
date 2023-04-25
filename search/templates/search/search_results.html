@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <h1>Na vyhledávací stránce pracujeme</h1>
+    <form method="get" action="{% url 'search' %}">
+        {{ search_form }}
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        {% for result in results %}
+            <li><a href="{{result.get_absolute_url }}">{{ result.title }}</a></li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
